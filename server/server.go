@@ -1,5 +1,7 @@
 package server
 
+import "context"
+
 type IServer interface {
-	Start()
+	Start(pctx context.Context)
 }

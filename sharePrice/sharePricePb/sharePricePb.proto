@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "github.com/guatom999/sharePrice";
+
+message SharePriceReq {
+    string shareSymbol = 1;
+}
+
+message SharePriceRes {
+    string Name = 1;
+    float Price = 2;
+    
+}
+
+service SharePriceGrpcService {
+    rpc SharePriceSearch(SharePriceReq) returns (SharePriceRes);
+}

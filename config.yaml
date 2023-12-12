@@ -7,6 +7,6 @@ database:
   port: 5432
   user: postgres
   password: 123456
-  dbname: cockroachdb
+  dbname: sharedb
   sslmode: disable
   timezone: Asia/Bangkok
