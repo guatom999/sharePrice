@@ -1,17 +1,23 @@
 package sharePriceHandlers
 
-import "github.com/labstack/echo"
-
-type (
-	MsgResponse struct {
-		Message string `json:"message"`
-	}
+import (
+	"github.com/guatom999/sharePrice/config"
+	"github.com/guatom999/sharePrice/sharePrice/sharePriceUseCases"
+	"github.com/labstack/echo/v4"
 )
 
-func ErrResponse(c echo.Context, responseCode int, message string) error {
-	return c.JSON(responseCode, &MsgResponse{Message: message})
+type sharePriceHandler struct {
+	cfg               *config.Config
+	sharePriceUseCase sharePriceUseCases.SharePriceUseCase
 }
 
-func SuccessResponse(c echo.Context, responseCode int, data any) error {
-	return c.JSON(responseCode, data)
+func NewSharePriceHandler(cfg *config.Config, sharePriceUseCase sharePriceUseCases.SharePriceUseCase) SharePriceHandler {
+	return &sharePriceHandler{
+		cfg:               cfg,
+		sharePriceUseCase: sharePriceUseCase,
+	}
+}
+
+func (h *sharePriceHandler) Test(e echo.Context) error {
+	return SuccessResponse(e, 200, "test")
 }

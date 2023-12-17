@@ -12,6 +12,11 @@ message SharePriceRes {
     
 }
 
+message Test {
+    string Message = 1;
+}
+
 service SharePriceGrpcService {
+    rpc JustTest(Test) returns (Test);
     rpc SharePriceSearch(SharePriceReq) returns (SharePriceRes);
 }

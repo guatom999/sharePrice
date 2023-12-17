@@ -60,10 +60,12 @@ func (s *server) Start(pctx context.Context) {
 
 	go s.gracefulShutdown(pctx, close)
 
+	s.sharePriceServer()
+
+	log.Println("Starting server...")
+
 	if err := s.app.Start(fmt.Sprintf(":%d", s.cfg.App.Port)); err != nil && err != http.ErrServerClosed {
 		log.Fatalf("Failed to shutdown:%v", err)
 	}
-
-	log.Println("Starting server...")
 
 }

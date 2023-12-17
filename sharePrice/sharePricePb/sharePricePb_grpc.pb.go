@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SharePriceGrpcServiceClient interface {
+	JustTest(ctx context.Context, in *Test, opts ...grpc.CallOption) (*Test, error)
 	SharePriceSearch(ctx context.Context, in *SharePriceReq, opts ...grpc.CallOption) (*SharePriceRes, error)
 }
 
@@ -31,6 +32,15 @@ type sharePriceGrpcServiceClient struct {
 
 func NewSharePriceGrpcServiceClient(cc grpc.ClientConnInterface) SharePriceGrpcServiceClient {
 	return &sharePriceGrpcServiceClient{cc}
+}
+
+func (c *sharePriceGrpcServiceClient) JustTest(ctx context.Context, in *Test, opts ...grpc.CallOption) (*Test, error) {
+	out := new(Test)
+	err := c.cc.Invoke(ctx, "/SharePriceGrpcService/JustTest", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *sharePriceGrpcServiceClient) SharePriceSearch(ctx context.Context, in *SharePriceReq, opts ...grpc.CallOption) (*SharePriceRes, error) {
@@ -46,6 +56,7 @@ func (c *sharePriceGrpcServiceClient) SharePriceSearch(ctx context.Context, in *
 // All implementations must embed UnimplementedSharePriceGrpcServiceServer
 // for forward compatibility
 type SharePriceGrpcServiceServer interface {
+	JustTest(context.Context, *Test) (*Test, error)
 	SharePriceSearch(context.Context, *SharePriceReq) (*SharePriceRes, error)
 	mustEmbedUnimplementedSharePriceGrpcServiceServer()
 }
@@ -54,6 +65,9 @@ type SharePriceGrpcServiceServer interface {
 type UnimplementedSharePriceGrpcServiceServer struct {
 }
 
+func (UnimplementedSharePriceGrpcServiceServer) JustTest(context.Context, *Test) (*Test, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method JustTest not implemented")
+}
 func (UnimplementedSharePriceGrpcServiceServer) SharePriceSearch(context.Context, *SharePriceReq) (*SharePriceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SharePriceSearch not implemented")
 }
@@ -68,6 +82,24 @@ type UnsafeSharePriceGrpcServiceServer interface {
 
 func RegisterSharePriceGrpcServiceServer(s grpc.ServiceRegistrar, srv SharePriceGrpcServiceServer) {
 	s.RegisterService(&SharePriceGrpcService_ServiceDesc, srv)
+}
+
+func _SharePriceGrpcService_JustTest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Test)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SharePriceGrpcServiceServer).JustTest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/SharePriceGrpcService/JustTest",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SharePriceGrpcServiceServer).JustTest(ctx, req.(*Test))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _SharePriceGrpcService_SharePriceSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -95,6 +127,10 @@ var SharePriceGrpcService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "SharePriceGrpcService",
 	HandlerType: (*SharePriceGrpcServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "JustTest",
+			Handler:    _SharePriceGrpcService_JustTest_Handler,
+		},
 		{
 			MethodName: "SharePriceSearch",
 			Handler:    _SharePriceGrpcService_SharePriceSearch_Handler,
