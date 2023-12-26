@@ -8,8 +8,7 @@ message SharePriceReq {
 
 message SharePriceRes {
     string Name = 1;
-    float Price = 2;
-    
+    double  Price = 2;
 }
 
 message Test {

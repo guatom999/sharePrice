@@ -3,7 +3,15 @@ package sharePriceEntity
 import "time"
 
 type (
+	InsertSharePrice struct {
+		Id        uint32    `gorm:"primaryKey;autoIncrement" json:"id"`
+		Name      string    `json:"name"`
+		Price     float64   `json:"price"`
+		UpdatedAt time.Time `json:"updated_at"`
+	}
+
 	SharePrice struct {
+		Id        uint32    `json:"id"`
 		Name      string    `json:"name"`
 		Price     float64   `json:"price"`
 		UpdatedAt time.Time `json:"updated_at"`

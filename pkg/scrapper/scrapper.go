@@ -1,7 +1,6 @@
 package scrapper
 
 import (
-	"errors"
 	"fmt"
 	"log"
 
@@ -23,9 +22,9 @@ func Scrapper(target string) (string, error) {
 		fmt.Println(priceText)
 	})
 
-	if priceText == "" {
-		return "", errors.New("error: price is null")
-	}
+	// if priceText == "" {
+	// 	return "", errors.New("error: price is null")
+	// }
 
 	// Visit the URL and start scraping
 	err := c.Visit(url)
