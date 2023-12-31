@@ -40,7 +40,7 @@ func (s *server) gracefulShutdown(pctx context.Context, close <-chan os.Signal) 
 
 	}
 
-	log.Println("Shutteddown Server")
+	log.Println("Shutting down Server...")
 }
 
 func NewEchoServer(db *gorm.DB, cfg *config.Config) IServer {

@@ -33,5 +33,6 @@ func (s *server) sharePriceServer() {
 	router := s.app.Group("/shareprice_v1")
 
 	router.GET("/test", sharePriceHandler.Test)
+	router.POST("/addsharetracker", sharePriceHandler.AddShareTracker)
 
 }

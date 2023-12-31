@@ -16,6 +16,10 @@ type (
 		Price     float64   `json:"price"`
 		UpdatedAt time.Time `json:"updated_at"`
 	}
+
+	ShareTrackReq struct {
+		Name string `json:"name" validate:"required,max=64"`
+	}
 )
 
 // type (
