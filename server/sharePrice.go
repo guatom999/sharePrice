@@ -1,8 +1,10 @@
 package server
 
 import (
+	"context"
 	"log"
 
+	"github.com/guatom999/sharePrice/jobs"
 	"github.com/guatom999/sharePrice/pkg/grpcconn"
 	"github.com/guatom999/sharePrice/sharePrice/sharePriceHandlers"
 	sharePb "github.com/guatom999/sharePrice/sharePrice/sharePricePb"
@@ -10,13 +12,17 @@ import (
 	"github.com/guatom999/sharePrice/sharePrice/sharePriceUseCases"
 )
 
-func (s *server) sharePriceServer() {
+func (s *server) sharePriceServer(pctx context.Context) {
 	sharePriceRepository := sharePriceRepositories.NewSharePriceRepository(s.db)
 	sharePriceUseCase := sharePriceUseCases.NewSharePriceUseCase(sharePriceRepository)
 	sharePriceHandler := sharePriceHandlers.NewSharePriceHandler(s.cfg, sharePriceUseCase)
 	sharePriceGrpcHandler := sharePriceHandlers.NewSharePriceGrpcHandler(sharePriceUseCase)
 
 	// _ = sharePriceHandler
+
+	go func() {
+		jobs.NewJobsSharePrice(sharePriceRepository).UpdateSharePriceJob(pctx, s.db)
+	}()
 
 	go func() {
 

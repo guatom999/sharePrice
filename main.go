@@ -10,6 +10,10 @@ import (
 
 func main() {
 
+	// c := cron.New()
+
+	// c.AddFunc()
+
 	ctx := context.Background()
 
 	cfg := config.GetConfig()

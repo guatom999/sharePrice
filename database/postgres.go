@@ -8,9 +8,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type postgresDB struct {
-	Db *gorm.DB
-}
+type (
+	postgresDB struct {
+		Db *gorm.DB
+	}
+
+	// SqlLogger struct {
+	// 	logger.Interface
+	// }
+)
 
 func NewPostgresDB(cfg *config.Config) Database {
 
@@ -24,7 +30,10 @@ func NewPostgresDB(cfg *config.Config) Database {
 		cfg.Db.TimeZone,
 	)
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		// Logger: &SqlLogger{},
+		// DryRun: false,
+	})
 	if err != nil {
 		panic("failed to connect database")
 	}

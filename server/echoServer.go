@@ -60,7 +60,7 @@ func (s *server) Start(pctx context.Context) {
 
 	go s.gracefulShutdown(pctx, close)
 
-	s.sharePriceServer()
+	s.sharePriceServer(pctx)
 	s.igToolsServer()
 
 	log.Println("Starting server...")

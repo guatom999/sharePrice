@@ -11,13 +11,14 @@ func main() {
 
 	db := database.NewPostgresDB(&cfg)
 
-	cockroachMigrate(db)
+	sharePriceMigrate(db)
 }
 
-func cockroachMigrate(db database.Database) {
-	db.GetDb().Migrator().CreateTable(&sharePriceEntity.SharePrice{})
+func sharePriceMigrate(db database.Database) {
+	// db.GetDb().Migrator().CreateTable(&sharePriceEntity.SharePrice{})
 	db.GetDb().CreateInBatches([]sharePriceEntity.SharePrice{
-		{Name: "Com7", Price: 22.7},
+		{Name: "COM7", Price: 22.7},
 		{Name: "CPF", Price: 18.8},
+		{Name: "CPALL", Price: 18.8},
 	}, 10)
 }

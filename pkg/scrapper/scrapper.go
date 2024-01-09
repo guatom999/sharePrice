@@ -19,12 +19,8 @@ func Scrapper(target string) (string, error) {
 
 	c.OnHTML("div.site-container div.quote-info", func(e *colly.HTMLElement) {
 		priceText = e.ChildText("div.value")
-		fmt.Println(priceText)
+		// fmt.Println(priceText)
 	})
-
-	// if priceText == "" {
-	// 	return "", errors.New("error: price is null")
-	// }
 
 	// Visit the URL and start scraping
 	err := c.Visit(url)
